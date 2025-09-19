@@ -1,0 +1,133 @@
+---
+import { supabase } from "../lib/supabase";
+
+let user = null;
+let profile = null;
+let displayName = null;
+let avatar = null;
+
+// Obtenemos sesión en el servidor
+const {
+  data: { session },
+} = await supabase.auth.getSession();
+
+if (session) {
+  user = session.user;
+
+  // Obtenemos el perfil en tu tabla
+  const { data: profileData } = await supabase
+    .from("profiles")
+    .select("nombre, avatar_url")
+    .eq("id", user.id)
+    .single();
+
+  profile = profileData;
+
+  // Definimos nombre y avatar dinámico
+  displayName =
+    profile?.nombre ??
+    user.user_metadata?.name ??
+    user.user_metadata?.full_name ??
+    user.email?.split("@")[0] ??
+    "Usuario";
+
+  avatar =
+    profile?.avatar_url ??
+    user.user_metadata?.picture ??
+    user.user_metadata?.avatar_url ??
+    "/default-avatar.png"; // opcional: tu imagen por defecto
+}
+---
+
+<div>
+  <!-- Navbar -->
+  <nav class="relative items-center pt-5 px-4 mx-auto max-w-screen-xl sm:px-8 md:flex md:space-x-6">
+    <div class="flex justify-between w-full">
+      <a href="/">
+        <img src="/logo.webp" width="140" height="50" alt="BeelPedia Logo" />
+      </a>
+
+      <!-- Menú -->
+      <div class="hidden md:flex md:items-center md:space-x-6">
+        <a href="/colaboradores" class="text-gray-600 hover:text-indigo-600">Colaboradores</a>
+        <a href="/clientes" class="text-gray-600 hover:text-indigo-600">Clientes</a>
+        <a href="/equipo" class="text-gray-600 hover:text-indigo-600">Equipo</a>
+      </div>
+
+      <!-- CTA o Bienvenida -->
+      {user ? (
+        <div class="flex items-center space-x-3 bg-gray-100 px-4 py-2 rounded-lg shadow">
+          <img src={avatar} alt="Avatar" class="w-8 h-8 rounded-full border border-gray-300" />
+          <span class="font-medium text-gray-800">
+            👋 Hola, {displayName}!
+          </span>
+        </div>
+      ) : (
+        <a
+          href="/signin"
+          class="py-2 px-5 rounded-lg font-medium text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 duration-150"
+        >
+          Iniciar sesión
+        </a>
+      )}
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="py-20">
+    <div class="max-w-screen-xl mx-auto text-gray-700 gap-x-12 items-center justify-between md:flex md:px-8">
+      <!-- Texto principal -->
+      <div class="flex-none space-y-6 px-4 sm:max-w-lg md:px-0 lg:max-w-xl">
+        <h1 class="text-sm text-indigo-600 font-medium">
+          Cultura y conocimiento a tu alcance
+        </h1>
+        <h2 class="text-4xl text-gray-900 font-extrabold md:text-5xl">
+          Comparte y descubre la riqueza cultural de México
+        </h2>
+        <p class="text-gray-600 leading-relaxed">
+          Únete a BeelPedia y ayuda a documentar la historia, gastronomía y
+          tradiciones de nuestro país, con herramientas interactivas y
+          multimedia.
+        </p>
+
+        <div class="flex flex-col sm:flex-row sm:space-x-4 sm:space-y-0 space-y-3">
+          {!user && (
+            <a
+              href="/register"
+              class="block py-3 px-5 text-center text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 rounded-lg shadow-lg"
+            >
+              Crear cuenta gratis
+            </a>
+          )}
+          <a
+            href="/explorar"
+            class="flex items-center justify-center gap-x-2 py-3 px-5 text-gray-700 hover:text-gray-900 font-medium border rounded-lg hover:bg-gray-50"
+          >
+            Explorar ahora
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M2 10a.75.75 0 01.75-.75h12.59l-2.1-1.95a.75.75 0 111.02-1.1l3.5 3.25a.75.75 0 010 1.1l-3.5 3.25a.75.75 0 11-1.02-1.1l2.1-1.95H2.75A.75.75 0 012 10z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Imagen -->
+      <div class="flex-none mt-14 md:mt-0 md:max-w-xl">
+        <img
+          src="https://images.unsplash.com/photo-1573164713619-24c711fe7878"
+          alt="Cultura mexicana"
+          class="rounded-xl shadow-lg"
+        />
+      </div>
+    </div>
+  </section>
+</div>
