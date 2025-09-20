@@ -1,0 +1,29 @@
+[
+  {
+    "avatar": "/img/team/arlyn-alfaro.jpg",
+    "name": "Arlyn Alfaro Domínguez",
+    "title": "Ingeniera en Sistemas - UX/UI & Multimedia",
+    "desc": "Encargada del diseño de la interfaz y la experiencia de usuario en la plataforma. Desarrolla elementos multimedia y se asegura de que la información cultural se presente de forma clara, atractiva e inclusiva.",
+    "linkedin": "javascript:void(0)",
+    "twitter": "javascript:void(0)",
+    "github": "javascript:void(0)"
+  },
+  {
+    "avatar": "/img/team/jesus-puertos.jpg",
+    "name": "Jesús Alberto Rodríguez Puertos",
+    "title": "Ingeniero en Sistemas - Full Stack & Arquitectura",
+    "desc": "Responsable del desarrollo de la plataforma y su infraestructura técnica. Integra herramientas de inteligencia artificial, bases de datos y geolocalización para garantizar un sistema confiable y escalable.",
+    "linkedin": "javascript:void(0)",
+    "twitter": "javascript:void(0)",
+    "github": "javascript:void(0)"
+  },
+  {
+    "avatar": "/img/team/luis-almir.jpg",
+    "name": "Luis Almir Domínguez Puertos",
+    "title": "Ingeniero en Sistemas - Datos & Validación",
+    "desc": "Se especializa en el análisis y validación de la información cultural registrada. Implementa metodologías para verificar la autenticidad de los datos y desarrollar estadísticas visuales para los usuarios.",
+    "linkedin": "javascript:void(0)",
+    "twitter": "javascript:void(0)",
+    "github": "javascript:void(0)"
+  }
+]

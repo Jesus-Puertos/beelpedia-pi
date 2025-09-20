@@ -1,10 +1,31 @@
 ---
+// src/pages/index.astro
 import Layout from "@/layouts/Layout.astro";
-import Hero from "@/components/Hero.astro"
+import Hero from "@/components/Hero.astro";
+import { supabase } from "@/lib/supabase";
 
+let user = null;
+let profile = null;
+let displayName = null;
+let avatar = null;
 
+const { data: { session } } = await supabase.auth.getSession();
+
+if (session) {
+  user = session.user;
+
+  const { data: profileData } = await supabase
+    .from("profiles")
+    .select("nombre, avatar_url")
+    .eq("id", user.id)
+    .single();
+
+  profile = profileData;
+  displayName = profile?.nombre ?? "Usuario";
+  avatar = profile?.avatar_url ?? "/default-avatar.webp";
+}
 ---
 
-<Layout >
-    <Hero />
+<Layout user={user} avatar={avatar} displayName={displayName}>
+  <Hero user={user} />
 </Layout>

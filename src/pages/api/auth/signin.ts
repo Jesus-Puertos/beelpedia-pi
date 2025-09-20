@@ -35,7 +35,8 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   });
 
   if (error) {
-    return new Response(error.message, { status: 500 });
+    // return new Response(error.message, { status: 500 });
+    return redirect("/verifica-tu-correo")
   }
 
   const { access_token, refresh_token } = data.session;

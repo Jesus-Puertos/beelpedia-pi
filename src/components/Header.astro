@@ -1,14 +1,31 @@
 ---
-interface Props {
-    usuario : string
-}
-
+const { user, avatar, displayName } = Astro.props;
 ---
 
+<nav class="relative items-center pt-5 mb-8 px-4 mx-auto max-w-screen-xl sm:px-8 md:flex md:space-x-6">
+  <div class="flex justify-between w-full">
+    <a href="/">
+      <img src="/logo.webp" width="140" height="50" alt="BeelPedia Logo" />
+    </a>
 
-<header>
-    <h1>
-        Header
-    </h1>
-    
-</header>
+    <div class="hidden md:flex md:items-center md:space-x-6">
+      <a href="/colaboradores" class="text-gray-600 hover:text-indigo-600">Colaboradores</a>
+      <a href="/clientes" class="text-gray-600 hover:text-indigo-600">Clientes</a>
+      <a href="/equipo" class="text-gray-600 hover:text-indigo-600">Equipo</a>
+    </div>
+
+    {user ? (
+      <div class="flex items-center space-x-3 bg-gray-100 px-4 py-2 rounded-lg shadow">
+        <img src={avatar} alt="Avatar" class="w-8 h-8 rounded-full border border-gray-300" />
+        <span class="font-medium text-gray-800">👋 Hola, {displayName}!</span>
+      </div>
+    ) : (
+      <a
+        href="/signin"
+        class="py-2 px-5 rounded-lg font-medium text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 duration-150"
+      >
+        Iniciar sesión
+      </a>
+    )}
+  </div>
+</nav>

@@ -71,20 +71,15 @@ if (accessToken && refreshToken) {
         </div>
 
         <!-- Botones sociales en la misma estructura que register -->
-        <div class="grid grid-cols-3 gap-x-3">
+        <div class="w-full">
           <form action="/api/auth/signin" method="post">
             <button type="submit" name="provider" value="google"
               class="flex items-center justify-center py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100 w-full">
               <img src="https://raw.githubusercontent.com/sidiDev/remote-assets/7cd06bf1d8859c578c2efbfda2c68bd6bedc66d8/google-icon.svg" alt="Google" class="w-5 h-5" />
             </button>
           </form>
-          <div></div> <!-- Espacio para que quede igual que register -->
-          <form action="/api/auth/signin" method="post">
-            <button type="submit" name="provider" value="github"
-              class="flex items-center justify-center py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100 w-full">
-              <img src="https://raw.githubusercontent.com/sidiDev/remote-assets/0d3b55a09c6bb8155ca19f43283dc6d88ff88bf5/github-icon.svg" alt="Github" class="w-5 h-5" />
-            </button>
-          </form>
+          
+         
         </div>
 
         <div class="relative">
