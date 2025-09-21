@@ -3,6 +3,7 @@
 import Layout from "@/layouts/Layout.astro";
 import Hero from "@/components/Hero.astro";
 import { supabase } from "@/lib/supabase";
+import MapMexico from "@/components/MapMexico.astro";
 
 let user = null;
 let profile = null;
@@ -28,4 +29,6 @@ if (session) {
 
 <Layout user={user} avatar={avatar} displayName={displayName}>
   <Hero user={user} />
+      <MapMexico />
+
 </Layout>

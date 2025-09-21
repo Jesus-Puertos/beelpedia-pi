@@ -9,21 +9,27 @@ const { user, avatar, displayName } = Astro.props;
     </a>
 
     <div class="hidden md:flex md:items-center md:space-x-6">
-      <a href="/colaboradores" class="text-gray-600 hover:text-indigo-600">Colaboradores</a>
-      <a href="/clientes" class="text-gray-600 hover:text-indigo-600">Clientes</a>
-      <a href="/equipo" class="text-gray-600 hover:text-indigo-600">Equipo</a>
+      <a href="/colaboradores" class="text-gray-600 hover:text-emerald-600">Colaboradores</a>
+      <a href="/clientes" class="text-gray-600 hover:text-emerald-600">Clientes</a>
+      <a href="/equipo" class="text-gray-600 hover:text-emerald-600">Equipo</a>
     </div>
 
     {user ? (
-      <div class="flex items-center space-x-3 bg-gray-100 px-4 py-2 rounded-lg shadow">
-        <img src={avatar} alt="Avatar" class="w-8 h-8 rounded-full border border-gray-300" />
-        <span class="font-medium text-gray-800">👋 Hola, {displayName}!</span>
+      <div class="flex items-center space-x-3 bg-emerald-50 px-4 py-2 rounded-lg shadow">
+        <img src={avatar} alt="Avatar" class="w-8 h-8 rounded-full border border-emerald-300" />
+        <span class="font-medium text-emerald-800">👋 Hola, {displayName}!</span>
+
+        <form method="get" action="/api/auth/signout">
+          <button
+            type="submit"
+            class="ml-3 py-1.5 px-4 rounded-md text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 transition"
+          >
+            Cerrar sesión
+          </button>
+        </form>
       </div>
     ) : (
-      <a
-        href="/signin"
-        class="py-2 px-5 rounded-lg font-medium text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 duration-150"
-      >
+      <a href="/signin" class="py-2 px-5 rounded-lg font-medium text-white bg-emerald-600">
         Iniciar sesión
       </a>
     )}

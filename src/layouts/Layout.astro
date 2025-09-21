@@ -1,33 +1,49 @@
 ---
-import '../styles/global.css'
+import '../styles/global.css';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import NewHeader from '@/components/NewHeader.astro';
 
-const title = "BeelPedia"
+import { supabase } from "../lib/supabase";
 
-import Header from "../components/Header.astro"
-const { user, avatar, displayName } = Astro.props;
+let user = null;
+let displayName = null;
+let avatar = null;
+
+const { data: { session } } = await supabase.auth.getSession();
+console.log("🔎 Sesión actual:", session); // Debug, revisa en consola del server
+
+if (session?.user) {
+  user = session.user;
+  const { data: profileData } = await supabase
+    .from("profiles")
+    .select("nombre, avatar_url")
+    .eq("id", user.id)
+    .single();
+
+  displayName = profileData?.nombre ?? "Usuario";
+  avatar = profileData?.avatar_url ?? "/default-avatar.webp";
+}
 ---
-
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>BeelPedia</title>
-	</head>
-	<body>
-   <Header user={user} avatar={avatar} displayName={displayName}/>
-		<slot />
-	</body>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>BeelPedia</title>
+  </head>
+  <body class="bg-emerald-50">
+    <!-- <Header user={user} displayName={displayName} avatar={avatar} /> -->
+     <NewHeader user={user} displayName={displayName} avatar={avatar} />
+    <slot />
+    <Footer />
+  </body>
+  <script is:inline src="/node_modules/preline/dist/preline.js"></script>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+  body{}
 </style>
+
+</html>
