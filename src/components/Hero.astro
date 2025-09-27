@@ -1,18 +1,19 @@
 ---
+
 const { user } = Astro.props;
 ---
 
-<section class="py-20 bg-emerald-50">
-  <div class="max-w-screen-xl mx-auto text-emerald-800 gap-x-12 items-center justify-between md:flex md:px-8">
-    <!-- Texto principal -->
+<section class="py-20 ">
+ 
+  <div class="max-w-screen-xl mx-auto text-emerald-800 dark:text-white gap-x-12 items-center justify-between md:flex md:px-8">
     <div class="flex-none space-y-6 px-4 sm:max-w-lg md:px-0 lg:max-w-xl">
-      <h1 class="text-sm text-emerald-600 font-semibold tracking-wide uppercase">
+      <h1 class="text-sm text-emerald-600 dark:text-slate-50  font-semibold tracking-wide uppercase">
         Cultura y conocimiento a tu alcance
       </h1>
-      <h2 class="text-4xl text-emerald-900 font-extrabold md:text-5xl leading-tight">
+      <h2 class="text-4xl uppercase text-emerald-900 dark:text-white  font-black md:text-5xl leading-tight">
         Comparte y descubre la riqueza cultural de México
       </h2>
-      <p class="text-emerald-700 leading-relaxed">
+      <p class="text-emerald-700 dark:text-slate-300  leading-relaxed">
         Únete a <span class="font-semibold">BeelPedia</span> y ayuda a documentar la historia, 
         gastronomía y tradiciones de nuestro país, con herramientas interactivas, 
         multimedia y geolocalización.
@@ -31,7 +32,7 @@ const { user } = Astro.props;
 
         <a
           href="/explorar"
-          class="flex items-center justify-center gap-x-2 py-3 px-5 text-emerald-700 hover:text-emerald-900 font-medium border border-emerald-300 rounded-lg hover:bg-emerald-100 transition"
+          class="flex items-center justify-center gap-x-2 py-3 px-5 text-emerald-700 dark:hover:text-emerald-900 dark:text-white font-medium border border-emerald-300 rounded-lg hover:bg-emerald-100 transition"
         >
           Explorar ahora
           <svg

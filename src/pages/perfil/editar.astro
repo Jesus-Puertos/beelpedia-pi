@@ -1,0 +1,91 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { createClient } from "@supabase/supabase-js";
+
+const { cookies, redirect } = Astro;
+
+// Recuperar tokens de cookies
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
+
+if (!accessToken || !refreshToken) {
+  return redirect("/signin");
+}
+
+// 🔑 Cliente con sesión del usuario (no el anónimo)
+const supabaseServer = createClient(
+  import.meta.env.SUPABASE_URL,
+  import.meta.env.SUPABASE_ANON_KEY,
+  {
+    global: {
+      headers: { Authorization: `Bearer ${accessToken.value}` },
+    },
+  }
+);
+
+// 🔎 Verificamos que la sesión siga válida
+const { data: { user }, error: userError } = await supabaseServer.auth.getUser();
+if (userError || !user) {
+  return redirect("/signin");
+}
+
+// 🔎 Consultamos perfil
+const { data: profile, error: profileError } = await supabaseServer
+  .from("profiles")
+  .select("*")
+  .eq("id", user.id)
+  .single();
+
+if (profileError) {
+  console.error("Error recuperando perfil:", profileError.message);
+}
+---
+
+<Layout>
+  <main class="max-w-lg mx-auto mt-10 p-6 bg-white rounded-xl shadow space-y-6">
+    <h1 class="text-2xl font-bold text-gray-800">Editar Perfil</h1>
+
+    <form action="/api/perfil/update" method="post" enctype="multipart/form-data" class="space-y-4">
+      <input type="hidden" name="id" value={profile?.id} />
+
+      <div>
+        <label class="block text-gray-700 font-medium">Nombre</label>
+        <input type="text" name="nombre" value={profile?.nombre ?? ""} required
+          class="w-full text-slate-600 mt-1 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <div>
+        <label class="block text-gray-700 font-medium">Apellidos</label>
+        <input type="text" name="apellidos" value={profile?.apellidos ?? ""}
+          class="w-full text-slate-600 mt-1 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <div>
+        <label class="block text-gray-700 font-medium">Teléfono</label>
+        <input type="tel" name="telefono" value={profile?.telefono ?? ""}
+          class="w-full text-slate-600 mt-1 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500" />
+      </div>
+
+      <div>
+  <label class="font-medium text-gray-800" for="bio">Biografía</label>
+  <textarea
+    name="bio"
+    id="bio"
+    rows="3"
+    class="w-full px-3 py-2 mt-1 border rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500"
+  >{profile?.bio ?? ""}</textarea>
+</div>
+
+      <div>
+        <label class="block text-gray-700 font-medium">Foto de perfil</label>
+        {profile?.avatar_url && <img src={profile.avatar_url} alt="Avatar" class="w-16 h-16 rounded-full mb-2" />}
+        <input type="file" name="avatar" accept="image/*" />
+      </div>
+
+      <button type="submit"
+        class="w-full py-2 bg-green-600 text-white rounded-lg hover:bg-green-500 transition">
+        Guardar cambios
+      </button>
+    </form>
+  </main>
+</Layout>
