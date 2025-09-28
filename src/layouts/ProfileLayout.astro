@@ -54,10 +54,9 @@ if (session?.user) {
         class=" m-auto dark:bg-[radial-gradient(circle_500px_at_50%_200px,#3e3e3e,transparent)]"
       >
      
-      <NewHeader user={user} displayName={displayName} avatar={avatar} />
       <slot />
        </div>
-      <Footer />
+      <!-- <Footer /> -->
       <KonamiEasterEgg client:load/>
   </body>
   <script is:inline src="/node_modules/preline/dist/preline.js"></script>

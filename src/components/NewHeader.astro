@@ -5,6 +5,7 @@ import enStrings from "../utils/navigation.ts";
 import frStrings from "../utils/nh/navigation.ts";
 import LanguagePicker from "@/components/ui/LenguagePicker.astro";
 import ThemeToggle from "./ui/icons/ThemeToggle.astro";
+import SearchProfiles from "./SearchProfiles.astro";
 
 const strings = Astro.currentLocale === "fr" ? frStrings : enStrings;
 const homeUrl = Astro.currentLocale === "fr" ? "/fr" : "/";
@@ -60,14 +61,16 @@ const { user, displayName, avatar } = Astro.props;
           <NavLink url={link.url} name={link.name} />
         ))}
 
+        
+        <SearchProfiles />
         {user ? (
           <div class="flex justify-between items-center gap-3 bg-white/80 dark:bg-emerald-800/50 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-emerald-200/40 dark:border-emerald-700">
             <a href="/perfil">
                           <img src={avatar} alt={displayName} class="h-8 w-8 rounded-full object-cover ring-2 ring-emerald-400" />
             </a>            
-            <span class="inline font-medium text-emerald-900 dark:text-emerald-100 text-sm">
+            {/* <span class="inline font-medium text-emerald-900 dark:text-emerald-100 text-sm">
               👋 Hola, <span class="font-semibold">{displayName}</span>
-            </span>
+            </span> */}
 
             <!-- Formulario para cerrar sesión -->
             <form id="signout-form" method="get" action="/api/auth/signout">
@@ -84,7 +87,6 @@ const { user, displayName, avatar } = Astro.props;
             Iniciar sesión
           </a>
         )}
-
         <LanguagePicker />
         <span class="inline-block">
             <ThemeToggle />

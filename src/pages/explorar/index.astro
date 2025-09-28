@@ -1,0 +1,75 @@
+---
+// src/pages/index.astro
+import Layout from "@/layouts/Layout.astro";
+import Hero from "@/components/Hero.astro";
+import { supabase } from "@/lib/supabase";
+import MapMexico from "@/components/MapMexico.astro";
+
+let user = null;
+let profile = null;
+let displayName = null;
+let avatar = null;
+
+const { data: { session } } = await supabase.auth.getSession();
+
+if (session) {
+  user = session.user;
+
+  const { data: profileData } = await supabase
+    .from("profiles")
+    .select("nombre, avatar_url")
+    .eq("id", user.id)
+    .single();
+
+  profile = profileData;
+  displayName = profile?.nombre ?? "Usuario";
+  avatar = profile?.avatar_url ?? "/default-avatar.webp";
+}
+
+import InfiniteMenu from '@/components/ui/menus/InfiniteMenu'
+
+const items = [
+  { image: 'https://picsum.photos/300/300?grayscale', link: 'https://es.wikipedia.org/wiki/Aguascalientes', title: 'Aguascalientes', description: 'Estado de México' },
+  { image: 'https://picsum.photos/301/301?grayscale', link: 'https://es.wikipedia.org/wiki/Baja_California', title: 'Baja California', description: 'Estado de México' },
+  { image: 'https://picsum.photos/302/302?grayscale', link: 'https://es.wikipedia.org/wiki/Baja_California_Sur', title: 'Baja California Sur', description: 'Estado de México' },
+  { image: 'https://picsum.photos/303/303?grayscale', link: 'https://es.wikipedia.org/wiki/Campeche', title: 'Campeche', description: 'Estado de México' },
+  { image: 'https://picsum.photos/304/304?grayscale', link: 'https://es.wikipedia.org/wiki/Coahuila', title: 'Coahuila', description: 'Estado de México' },
+  { image: 'https://picsum.photos/305/305?grayscale', link: 'https://es.wikipedia.org/wiki/Colima', title: 'Colima', description: 'Estado de México' },
+  { image: 'https://picsum.photos/306/306?grayscale', link: 'https://es.wikipedia.org/wiki/Chiapas', title: 'Chiapas', description: 'Estado de México' },
+  { image: 'https://picsum.photos/307/307?grayscale', link: 'https://es.wikipedia.org/wiki/Chihuahua', title: 'Chihuahua', description: 'Estado de México' },
+  { image: 'https://picsum.photos/308/308?grayscale', link: 'https://es.wikipedia.org/wiki/Ciudad_de_M%C3%A9xico', title: 'Ciudad de México', description: 'Capital del país' },
+  { image: 'https://picsum.photos/309/309?grayscale', link: 'https://es.wikipedia.org/wiki/Durango', title: 'Durango', description: 'Estado de México' },
+  { image: 'https://picsum.photos/310/310?grayscale', link: 'https://es.wikipedia.org/wiki/Guanajuato', title: 'Guanajuato', description: 'Estado de México' },
+  { image: 'https://picsum.photos/311/311?grayscale', link: 'https://es.wikipedia.org/wiki/Guerrero', title: 'Guerrero', description: 'Estado de México' },
+  { image: 'https://picsum.photos/312/312?grayscale', link: 'https://es.wikipedia.org/wiki/Hidalgo', title: 'Hidalgo', description: 'Estado de México' },
+  { image: 'https://picsum.photos/313/313?grayscale', link: 'https://es.wikipedia.org/wiki/Jalisco', title: 'Jalisco', description: 'Estado de México' },
+  { image: 'https://picsum.photos/314/314?grayscale', link: 'https://es.wikipedia.org/wiki/M%C3%A9xico_(estado)', title: 'Estado de México', description: 'Estado de México' },
+  { image: 'https://picsum.photos/315/315?grayscale', link: 'https://es.wikipedia.org/wiki/Michoac%C3%A1n', title: 'Michoacán', description: 'Estado de México' },
+  { image: 'https://picsum.photos/316/316?grayscale', link: 'https://es.wikipedia.org/wiki/Morelos', title: 'Morelos', description: 'Estado de México' },
+  { image: 'https://picsum.photos/317/317?grayscale', link: 'https://es.wikipedia.org/wiki/Nayarit', title: 'Nayarit', description: 'Estado de México' },
+  { image: 'https://picsum.photos/318/318?grayscale', link: 'https://es.wikipedia.org/wiki/Nuevo_Le%C3%B3n', title: 'Nuevo León', description: 'Estado de México' },
+  { image: 'https://picsum.photos/319/319?grayscale', link: 'https://es.wikipedia.org/wiki/Oaxaca', title: 'Oaxaca', description: 'Estado de México' },
+  { image: 'https://picsum.photos/320/320?grayscale', link: 'https://es.wikipedia.org/wiki/Puebla', title: 'Puebla', description: 'Estado de México' },
+  { image: 'https://picsum.photos/321/321?grayscale', link: 'https://es.wikipedia.org/wiki/Quer%C3%A9taro', title: 'Querétaro', description: 'Estado de México' },
+  { image: 'https://picsum.photos/322/322?grayscale', link: 'https://es.wikipedia.org/wiki/Quintana_Roo', title: 'Quintana Roo', description: 'Estado de México' },
+  { image: 'https://picsum.photos/323/323?grayscale', link: 'https://es.wikipedia.org/wiki/San_Luis_Potos%C3%AD', title: 'San Luis Potosí', description: 'Estado de México' },
+  { image: 'https://picsum.photos/324/324?grayscale', link: 'https://es.wikipedia.org/wiki/Sinaloa', title: 'Sinaloa', description: 'Estado de México' },
+  { image: 'https://picsum.photos/325/325?grayscale', link: 'https://es.wikipedia.org/wiki/Sonora', title: 'Sonora', description: 'Estado de México' },
+  { image: 'https://picsum.photos/326/326?grayscale', link: 'https://es.wikipedia.org/wiki/Tabasco', title: 'Tabasco', description: 'Estado de México' },
+  { image: 'https://picsum.photos/327/327?grayscale', link: 'https://es.wikipedia.org/wiki/Tamaulipas', title: 'Tamaulipas', description: 'Estado de México' },
+  { image: 'https://picsum.photos/328/328?grayscale', link: 'https://es.wikipedia.org/wiki/Tlaxcala', title: 'Tlaxcala', description: 'Estado de México' },
+  { image: 'https://picsum.photos/329/329?grayscale', link: 'https://es.wikipedia.org/wiki/Veracruz', title: 'Veracruz', description: 'Estado de México' },
+  { image: 'https://picsum.photos/330/330?grayscale', link: 'https://es.wikipedia.org/wiki/Yucat%C3%A1n', title: 'Yucatán', description: 'Estado de México' },
+  { image: 'https://picsum.photos/331/331?grayscale', link: 'https://es.wikipedia.org/wiki/Zacatecas', title: 'Zacatecas', description: 'Estado de México' }
+];
+
+---
+
+<Layout user={user} avatar={avatar} displayName={displayName}>
+  <h1>
+    Explorar
+  </h1>
+<div style={{ height: '600px', position: 'relative' }}>
+  <InfiniteMenu client:load items={items}/>
+</div>
+</Layout>

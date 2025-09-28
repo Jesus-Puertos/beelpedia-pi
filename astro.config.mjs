@@ -12,7 +12,9 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()]
   },
-
+ devToolbar: {
+    enabled: false
+  },
   output: "server",
   adapter: vercel(),
   integrations: [react()]

@@ -1,34 +1,42 @@
 ---
-
 const { user } = Astro.props;
 ---
 
-<section class="py-20 ">
- 
-  <div class="max-w-screen-xl mx-auto text-emerald-800 dark:text-white gap-x-12 items-center justify-between md:flex md:px-8">
+<section class="py-20">
+  <div
+    class="max-w-screen-xl mx-auto text-emerald-800 dark:text-white gap-x-12 items-center justify-between md:flex md:px-8"
+  >
     <div class="flex-none space-y-6 px-4 sm:max-w-lg md:px-0 lg:max-w-xl">
-      <h1 class="text-sm text-emerald-600 dark:text-slate-50  font-semibold tracking-wide uppercase">
+      <h1
+        class="text-sm text-emerald-600 dark:text-slate-50 font-semibold tracking-wide uppercase"
+      >
         Cultura y conocimiento a tu alcance
       </h1>
-      <h2 class="text-4xl uppercase text-emerald-900 dark:text-white  font-black md:text-5xl leading-tight">
+      <h2
+        class="text-4xl uppercase text-emerald-900 dark:text-white font-black md:text-5xl leading-tight"
+      >
         Comparte y descubre la riqueza cultural de México
       </h2>
-      <p class="text-emerald-700 dark:text-slate-300  leading-relaxed">
-        Únete a <span class="font-semibold">BeelPedia</span> y ayuda a documentar la historia, 
-        gastronomía y tradiciones de nuestro país, con herramientas interactivas, 
-        multimedia y geolocalización.
+      <p class="text-emerald-700 dark:text-slate-300 leading-relaxed">
+        Únete a <span class="font-semibold">BeelPedia</span> y ayuda a documentar
+        la historia, gastronomía y tradiciones de nuestro país, con herramientas
+        interactivas, multimedia y geolocalización.
       </p>
 
       <!-- Botones -->
-      <div class="flex flex-col sm:flex-row sm:space-x-4 sm:space-y-0 space-y-3">
-        {user ? null : (
-          <a
-            href="/register"
-            class="block py-3 px-5 text-center text-white font-medium bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 rounded-lg shadow-lg transition"
-          >
-            Crear cuenta gratis
-          </a>
-        )}
+      <div
+        class="flex flex-col sm:flex-row sm:space-x-4 sm:space-y-0 space-y-3"
+      >
+        {
+          user ? null : (
+            <a
+              href="/register"
+              class="block py-3 px-5 text-center text-white font-medium bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 rounded-lg shadow-lg transition"
+            >
+              Crear cuenta gratis
+            </a>
+          )
+        }
 
         <a
           href="/explorar"
@@ -44,8 +52,7 @@ const { user } = Astro.props;
             <path
               fill-rule="evenodd"
               d="M2 10a.75.75 0 01.75-.75h12.59l-2.1-1.95a.75.75 0 111.02-1.1l3.5 3.25a.75.75 0 010 1.1l-3.5 3.25a.75.75 0 11-1.02-1.1l2.1-1.95H2.75A.75.75 0 012 10z"
-              clip-rule="evenodd"
-            />
+              clip-rule="evenodd"></path>
           </svg>
         </a>
       </div>
@@ -53,11 +60,29 @@ const { user } = Astro.props;
 
     <!-- Imagen -->
     <div class="flex-none mt-14 md:mt-0 md:max-w-xl">
-      <img
+      <!-- <img
         src="/hero.jpg"
         alt="Cultura mexicana"
         class="rounded-xl shadow-xl border-4 border-emerald-200"
+      /> -->
+      <div class="group rounded-xl  transition-all  hover:scale-105 relative">
+        <img
+        class="blur-lg absolute inset-0 transition group-hover:contrast-150 opacity-70 -z-10"
+        loading="lazy"
+        src="/hero.jpg"
+        alt="gallery image"
       />
+      <img
+        class="rounded-xl shadow-xl border-2 border-s-emerald-100 dark:border-gray-200"
+        loading="lazy"
+        src="/hero.jpg"
+        alt="gallery image"
+      />
+      </div>
+      
     </div>
+
+    
   </div>
 </section>
+
